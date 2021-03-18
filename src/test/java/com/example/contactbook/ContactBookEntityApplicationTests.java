@@ -1,4 +1,4 @@
-package com.example.contactbook;
+package com.contactbook;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
