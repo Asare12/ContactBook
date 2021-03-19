@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ContactBook {
+public class ContactBookEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer contactBookId;
