@@ -7,19 +7,19 @@
 <div th:replace="fragments/header :: header"/>
 <body>
 <H1>Contact List</H1>
-<a th:href="@{/createContact}" methods="get"><button type="button" class="btn btn-success" >Add contact</button></a>
+<a th:href="@{/createContact}" methods="get"><button type="button" class="btn btn-success" >Add contact</button></a><br><br>
 <table class="table table-striped" border="2">
     <thead>
     <tr>
-        <th scope="col">Contact ID</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Phone number</th>
+        <th scope="col">Update Action</th>
+        <th scope="col">Delete Action</th>
     </tr>
     </thead>
     <tbody class="tbody-custom">
     <tr th:each="contact : ${contacts}">
-        <td th:text="${contact.contactBookId}">Contact ID</td>
         <td th:text="${contact.name}">Name</td>
         <td th:text="${contact.email}">Email</td>
         <td th:text="${contact.phoneNumber}">Phone Number</td>
