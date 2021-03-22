@@ -4,10 +4,12 @@ import com.example.contactbook.entities.ContactBookEntity;
 import com.example.contactbook.repositories.ContactBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ContactBookService {
 
     @Autowired
@@ -29,22 +31,17 @@ public class ContactBookService {
         return repository.findByName(name);
     }
 
+    public List<ContactBookEntity> getListContactsByName(String name){
+        return repository.findByNameContaining(name);
+    }
+
     public String removeContactById(int id){
         repository.deleteById(id);
         return "Contact " + id + " has been removed";
     }
 
-    public String removeContact(String name){
-        repository.deleteByName(name);
-        return "Contact " + name + " has been removed";
+    public ContactBookEntity updateContact(ContactBookEntity contact, int id){
+        contact.setContactBookId(id);
+        return repository.save(contact);
     }
-
-    public ContactBookEntity updateContact(ContactBookEntity contact){
-        ContactBookEntity existingContact = repository.findById(contact.getContactBookId()).orElse(null);
-        existingContact.setName(contact.getName());
-        existingContact.setEmail(contact.getEmail());
-        existingContact.setPhoneNumber(contact.getPhoneNumber());
-        return repository.save(existingContact);
-    }
-
 }
