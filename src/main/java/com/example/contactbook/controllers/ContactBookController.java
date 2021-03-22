@@ -1,33 +1,52 @@
 package com.example.contactbook.controllers;
 
 import com.example.contactbook.entities.ContactBookEntity;
-import com.example.contactbook.repositories.ContactBookRepository;
 import com.example.contactbook.service.ContactBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
-@RestController
+@Controller
 public class ContactBookController {
 
     @Autowired
     private ContactBookService service;
 
-    @PostMapping(path="/contact-book/add")
-    public ContactBookEntity addContact(@RequestBody ContactBookEntity contactBookEntity){
-        return service.saveContact(contactBookEntity);
+    /**
+     * Creates a new contact object when given an contact object and saves it
+     * @param contactBookEntity
+     * @return created contact page
+     */
+    @PostMapping(path="/contact-book/addContact")
+    public String addContact(@Valid ContactBookEntity contactBookEntity){
+        service.saveContact(contactBookEntity);
+        return "createContact";
     }
 
+    /**
+     * Get all contacts
+     * @param model contact data
+     * @return view contact page with populated list of contact objects
+     */
     @GetMapping(path="/contact-book/showAll")
-    public List<ContactBookEntity> getAllContacts(@RequestBody ContactBookEntity contactBookEntity){
-        return service.getContacts();
+    public String getAllContacts(Model model){
+        model.addAttribute("contacts",service.getContacts());
+        return "viewContactList";
     }
 
+    /**
+     * Fetch a specific contact with given contactID
+     * @param id unique identifier
+     * @param model contact data
+     * @return the update page
+     */
     @GetMapping(path="/contact-book/findContactById/{id}")
-    public ContactBookEntity findContactById(@PathVariable int id){
-        return service.getContactById(id);
+    public String findContactById(@PathVariable int id, Model model){
+        model.addAttribute("contact", service.getContactById(id));
+        return "updateContact";
     }
 
     @GetMapping(path="/contact-book/{name}")
@@ -35,17 +54,41 @@ public class ContactBookController {
         return service.getContactByName(name);
     }
 
-    @PutMapping(path="/contact-book/editContact")
-    public ContactBookEntity editContact(@RequestBody ContactBookEntity contactBookEntity){
-        return service.updateContact(contactBookEntity);
+    /**
+     * Searches for contact by name
+     * @param searchContact String name passed in for search
+     * @param model data
+     * @return List of contacts with given name
+     */
+    @GetMapping("/contact-book")
+    public String searchContactForm(@RequestParam(value = "searchContact", required = false, defaultValue = "None") String searchContact, Model model){
+        model.addAttribute("contacts", service.getListContactsByName(searchContact));
+        return "viewContactList";
     }
 
-    @DeleteMapping(path="/contact-book/deleteById/{id}")
-    public String removeContactById(@PathVariable int id){
-        return service.removeContactById(id);
+    /**
+     * Edit a specific contact by id
+     * @param contactBookEntity object
+     * @param id unique identifier
+     * @param model data
+     * @return All contacts with updated data
+     */
+    @GetMapping(path="/contact-book/editContact{id}")
+    public String editContact(@Valid ContactBookEntity contactBookEntity, @PathVariable("id") int id, Model model){
+        service.updateContact(contactBookEntity, id);
+        model.addAttribute("contacts", service.getContacts());
+        return getAllContacts(model);
     }
-    @DeleteMapping(path="/contact-book/delete/{name}")
-    public String removeContact(@PathVariable String name){
-        return service.removeContact(name);
+
+    /**
+     * Removes a specific contact by id
+     * @param id unique identifier
+     * @param model data
+     * @return All contacts with updated data
+     */
+    @GetMapping(path="/contact-book/deleteById/{id}")
+    public String removeContactById(@PathVariable int id, Model model) {
+        service.removeContactById(id);
+        return getAllContacts(model);
     }
 }
