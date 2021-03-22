@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Update Contact</title>
+</head>
+<h1 style="text-align: center; margin-top: 5%"> Create New Contact</h1>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="card col-5">
+            <div class="card-body">
+                <form th:action="@{'/contact-book/editContact' + ${contact.contactBookId}}" th:object="${contact}" enctype="multipart/form-data">
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-auto">
+                            <label>Contact Name</label>
+                            <input class="form-control" type="text" name="name" th:field="*{name}" required/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-auto">
+                            <label>Contact Email</label>
+                            <input class="form-control" type="email" name="email" th:field="*{email}"  required/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-auto">
+                            <label>Contact Number</label>
+                            <input class="form-control" type="tel" name="phoneNumber" th:field="*{phoneNumber}" />
+                        </div>
+                    </div><br>
+                    <div class="form-row d-flex justify-content-center">
+                        <input type="submit" value="Update Contact" class="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
