@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Lists</title>
+</head>
+<body>
+<br>
+<p>List of Contacts</p>
+
+<div class="list-group" th:each="contact : ${contacts}">
+    <a href="#" class="list-group-item list-group-item-action">
+        <p th:text="${contact}"/>
+    </a>
+</div>
+
+</body>
+</html>
