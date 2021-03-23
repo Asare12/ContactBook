@@ -23,6 +23,10 @@ class ContactBookApplicationTests {
 	void contextLoads() {
 	}
 
+	/**
+	 * When: The user searches for contact id 1
+	 * Then: My contact book should return one contact with the name issac
+	 */
 	@Test
 	void getContactById_returnIssacForID1(){
 		whenSearchContactWithID1();
@@ -38,6 +42,10 @@ class ContactBookApplicationTests {
 		assertEquals("Issac", name);
 	}
 
+	/**
+	 * When: The user saves a contact in contact book
+	 * Then: My contact book should save contact details and return it
+	 */
 	@Test
     void saveContact_validateReturnContactWithDetails(){
 	    whenUserCreatesNewContactAndSaves();
@@ -55,7 +63,11 @@ class ContactBookApplicationTests {
 		assertEquals(contact, newContact);
     }
 
-    @Test
+	/**
+	 * When: The user deletes a contact in contact book
+	 * Then: My contact book should delete that specific contact details and I should have less contacts in my contact book
+	 */
+	@Test
 	void deleteContact_validateContactDavidForID4HasBeenRemoved(){
 		whenDeletesExistingContactDavidByName();
 		thenDeletingShouldBeSuccessful();
@@ -70,6 +82,10 @@ class ContactBookApplicationTests {
 		service.removeContact("David");
 	}
 
+	/**
+	 * When: The user tries to update a specific contact
+	 * Then: My contact book should update that specific contact details and show me that contact has been visibly changed
+	 */
 	@Test
 	void editContact_updateContactAnnaEmailHasBeenChanged(){
 		whenEnterNewEmailDetails();
