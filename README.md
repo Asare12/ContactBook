@@ -1,5 +1,5 @@
 # ContactBook
-Contact Book is a web based application used to manage contacts. Users can enter the application and view their full contact list. Users also have the option to add new contacts as they wish. They also have the option to update contact details and remove any contacts that arent needed. 
+Contact Book is a web based application used to manage contacts. Users can enter the application and view their full contact list. Users also have the option to add new contacts as they wish. They also have the option to update contact details and remove any contacts that aren't needed. 
 
 ### Prerequisites
 
